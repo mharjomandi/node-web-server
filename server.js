@@ -3,6 +3,7 @@
 const express = require('express');
 const hbs = require('hbs');
 const fs =  require('fs');
+const os = require("os");
 const port = process.env.PORT || 3000;
 
 
@@ -17,7 +18,8 @@ app.use((req, res, next) => {
   var dt =  new Date().toISOString().slice(0,10);
   var log= `${now}: ${req.method} ${req.url}`;
   console.log (log);
-  fs.appendFile(`/logs/server-${dt}.log`, log + `\n`, (err) => {
+  console.log (dt);
+  fs.appendFile(__dirname + '/logs/server-'+dt+'.log', log + os.EOL, (err) => {
     if (err) {
       console.log (`Unable to append to <server-${dt}.log>`);
     }
